@@ -1,5 +1,5 @@
 
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     const reservaForm = document.getElementById('reservaForm');
     const ultimaReservaDiv = document.getElementById('ultimaReserva');
     const listaReservasUl = document.getElementById('listaReservas');
@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', function() {
     mostrarReservasAnteriores();
 
     // Evento submit del formulario de reserva
-    reservaForm.addEventListener('submit', function(event) {
+    reservaForm.addEventListener('submit', function (event) {
         event.preventDefault(); // Evitar que el formulario se envíe de manera convencional
 
         // Obtener valores del formulario y realizar validaciones
@@ -81,7 +81,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // Evento click para eliminar todas las reservas
-    eliminarReservasBtn.addEventListener('click', function() {
+    eliminarReservasBtn.addEventListener('click', function () {
         localStorage.removeItem('reservas');
         listaReservasUl.innerHTML = '';
     });
@@ -150,7 +150,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         let reservas = JSON.parse(localStorage.getItem('reservas')) || [];
 
-        reservas.forEach(function(reserva, index) {
+        reservas.forEach(function (reserva, index) {
             const li = document.createElement('li');
             li.innerHTML = `Reserva ${index + 1}: ${reserva.nombre} - ${reserva.tipoHabitacion} - ${reserva.numNoches} noches - ${reserva.numPersonas} personas - Total: $${reserva.costoTotal}`;
             listaReservasUl.appendChild(li);
@@ -168,4 +168,4 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 function rotateCard(img) {
     img.closest('.card').querySelector('.card-inner').classList.toggle('is-flipped');
-  }
+}
