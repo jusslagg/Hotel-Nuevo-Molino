@@ -1,9 +1,15 @@
-
 document.addEventListener('DOMContentLoaded', function () {
     const reservaForm = document.getElementById('reservaForm');
     const ultimaReservaDiv = document.getElementById('ultimaReserva');
     const listaReservasUl = document.getElementById('listaReservas');
     const eliminarReservasBtn = document.getElementById('eliminarReservas');
+
+    // Definir array de tipos de habitación
+    const tiposHabitacion = [
+        { tipo: 'individual', costoPorNoche: 20000, capacidadMaxima: 1 },
+        { tipo: 'doble', costoPorNoche: 40000, capacidadMaxima: 4 },
+        { tipo: 'matrimonial', costoPorNoche: 30000, capacidadMaxima: 2 }
+    ];
 
     // Cargar reservas almacenadas al cargar la página
     mostrarReservasAnteriores();
@@ -42,23 +48,14 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
         // Validar capacidad máxima según tipo de habitación
-        if (tipoHabitacion === 'individual' && numPersonas > 1) {
-            mostrarError('La habitación individual solo permite 1 persona.');
-            return;
-        }
-
-        if (tipoHabitacion === 'doble' && numPersonas > 4) {
-            mostrarError('La habitación doble permite máximo 4 personas.');
-            return;
-        }
-
-        if (tipoHabitacion === 'matrimonial' && numPersonas > 2) {
-            mostrarError('La habitación matrimonial permite máximo 2 personas.');
+        const tipoSeleccionado = tiposHabitacion.find(tipo => tipo.tipo === tipoHabitacion);
+        if (tipoSeleccionado && numPersonas > tipoSeleccionado.capacidadMaxima) {
+            mostrarError(`La habitación ${tipoHabitacion} permite máximo ${tipoSeleccionado.capacidadMaxima} personas.`);
             return;
         }
 
         // Calcular costo total
-        const costoPorNoche = obtenerCostoPorNoche(tipoHabitacion);
+        const costoPorNoche = tipoSeleccionado ? tipoSeleccionado.costoPorNoche : 0;
         let costoTotal = costoPorNoche * numNoches;
 
         // Agregar costo de desayuno y cena si están seleccionados
@@ -85,19 +82,6 @@ document.addEventListener('DOMContentLoaded', function () {
         localStorage.removeItem('reservas');
         listaReservasUl.innerHTML = '';
     });
-
-    function obtenerCostoPorNoche(tipo) {
-        switch (tipo) {
-            case 'individual':
-                return 20000;
-            case 'doble':
-                return 40000;
-            case 'matrimonial':
-                return 30000;
-            default:
-                return 0;
-        }
-    }
 
     function mostrarConfirmacion(nombre, tipoHabitacion, numNoches, numPersonas, costoTotal, tieneDesayuno, tieneCena) {
         let mensaje = `Nombre: ${nombre}<br>Tipo de Habitación: ${tipoHabitacion}<br>Número de Noches: ${numNoches}<br>Número de Personas: ${numPersonas}<br>Costo Total: $${costoTotal}`;
@@ -166,6 +150,3 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 });
-function rotateCard(img) {
-    img.closest('.card').querySelector('.card-inner').classList.toggle('is-flipped');
-}
