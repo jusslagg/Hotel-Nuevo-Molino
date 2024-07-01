@@ -166,3 +166,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 });
+function rotateCard(img) {
+    img.closest('.card').querySelector('.card-inner').classList.toggle('is-flipped');
+  }

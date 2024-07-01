@@ -138,3 +138,11 @@ footer {
     border-color: #f5c6cb;
     color: #721c24;
 }
+.card-title{
+    text-align: center;
+}
+.container{
+    align-items: center;
+    padding: 20px;
+    margin: 10px;
+}
